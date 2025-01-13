@@ -1075,12 +1075,14 @@ retry:
 
   tries = 10;
   while (tries--) {
-    /* sleep 500 ms, may need more depending on device*/
-    usleep(500000);
+    /* sleep 1000 ms, may need more depending on device, PI5 requires at least 600ms*/
+    usleep(1000000);
 
     ret = usb_rediscover_device(mxt, bus_devices);
-    if (ret == MXT_SUCCESS)
+    if (ret == MXT_SUCCESS) {
+      mxt_info(mxt->ctx, "device found!");
       break;
+    }
   }
 
   if (ret) {
